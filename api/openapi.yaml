@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /users:
+    get:
+      responses:
+        "200":
+          description: A list of users
+      summary: Get all users
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_users_post_request'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User created successfully
+      summary: Create a new user
+  /users/{id}:
+    delete:
+      parameters:
+      - description: Numeric ID of the user to delete
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: User deleted successfully (no content)
+        "404":
+          description: User not found
+      summary: Delete a user by ID
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: A single user
+        "404":
+          description: User not found
+      summary: Get a user by ID
+    put:
+      parameters:
+      - description: Numeric ID of the user to update
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_users__id__put_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User updated successfully
+        "404":
+          description: User not found
+      summary: Update a user by ID
+  /services:
+    get:
+      responses:
+        "200":
+          description: A list of services
+      summary: Get all services
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_services_post_request'
+        required: true
+      responses:
+        "201":
+          description: Service created successfully
+      summary: Create a new service
+  /services/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Service deleted successfully (no content)
+        "404":
+          description: Service not found
+      summary: Delete a service by ID
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_services__id__put_request'
+        required: true
+      responses:
+        "200":
+          description: Service updated successfully
+        "404":
+          description: Service not found
+      summary: Update a service by ID
+  /networks:
+    get:
+      responses:
+        "200":
+          description: A list of social networks
+      summary: Get all networks
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_networks_post_request'
+        required: true
+      responses:
+        "201":
+          description: Network added successfully
+      summary: Add a new social network
+  /networks/{id}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Network deleted successfully (no content)
+        "404":
+          description: Network not found
+      summary: Delete a network by ID
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_networks__id__put_request'
+        required: true
+      responses:
+        "200":
+          description: Network updated successfully
+        "404":
+          description: Network not found
+      summary: Update a network by ID
+components:
+  schemas:
+    User:
+      example:
+        name: Alice
+        id: 1
+        email: alice@example.com
+      properties:
+        id:
+          example: 1
+          type: integer
+        name:
+          example: Alice
+          type: string
+        email:
+          example: alice@example.com
+          type: string
+      type: object
+    _users_post_request:
+      properties:
+        name:
+          example: Charlie
+          type: string
+        email:
+          example: charlie@example.com
+          format: email
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    _users__id__put_request:
+      properties:
+        name:
+          example: Updated Name
+          type: string
+        email:
+          example: updated@example.com
+          format: email
+          type: string
+      type: object
+    _services_post_request:
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+      required:
+      - name
+      - price
+      type: object
+    _services__id__put_request:
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+      type: object
+    _networks_post_request:
+      properties:
+        name:
+          type: string
+        url:
+          format: uri
+          type: string
+      required:
+      - name
+      - url
+      type: object
+    _networks__id__put_request:
+      properties:
+        name:
+          type: string
+        url:
+          format: uri
+          type: string
+      type: object
