@@ -1,4 +1,4 @@
-module github.com/GIT_USER_ID/GIT_REPO_ID
+module go.hinlam.com/demo4api2sdk
 
 go 1.18
 
